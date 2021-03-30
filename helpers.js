@@ -4,8 +4,8 @@ exports = {
     getRequest
 };
 
-const makeDiscordOptions = function() {
-    
+const makeDiscordOptions = function(url) {
+
 }
 
 const getRequest = async function(options, payload) {
