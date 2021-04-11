@@ -1,1 +1,0 @@
-# discordwebhook-dailyukcovid
