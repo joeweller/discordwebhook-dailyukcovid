@@ -1,6 +1,3 @@
 {
-    "discordWebhook": "",
-    "UKGovApiQueryUrl": "",
-    "dailyStartTime": "",
-    "waitInterval": 0
+    "discordUrl": ""
 }
