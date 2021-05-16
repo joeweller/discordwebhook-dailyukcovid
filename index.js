@@ -1,7 +1,6 @@
 const helpers = require('./helpers');
 const { readFileSync } = require('fs');
 const url = require('url');
-var zlib = require('zlib');
 
 
 var CONFIG;
@@ -41,8 +40,9 @@ try {
             await helpers.waitMinutes(10);
         }
     }
-
+    
     if (!covidResult) {
+        helpers.consoleLog(`unable to retrieve COVID result, exiting`)
         process.exit(1);
     } else {
         covidResult = JSON.parse(covidResult)
