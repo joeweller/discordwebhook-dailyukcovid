@@ -12,7 +12,8 @@ A simple discord bot controller that posts messages to the discord webhook api. 
       1) edit "config.json" and set your discord's webhook URL
    5) inspect "run.sh" using editor or cat and ascertain if it needs editing.
       1) if it needs to be altered: `cp run.sh customrun.sh`
-   6) set up CRON to run script: `0 16 * * * /home/discordwebhook-dailyukcovid/run.sh`
+   6) enable "run.sh" to be executed: `chmod +x run.sh`
+   7) set up CRON to run script: `0 16 * * * /home/discordwebhook-dailyukcovid/run.sh`
 
 instead of CRON you can simply run `$ ./run.sh` to test if it's working
 
