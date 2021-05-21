@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # navigate to git repo destination
-cd ./discordwebhook-dailyukcovid
+cd ~/discordwebhook-dailyukcovid
 
 # run the index.js with node installer.
 # -
