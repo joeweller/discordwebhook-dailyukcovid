@@ -17,7 +17,7 @@ try {
     var covidResult;
 
     // try for 2 hours with 10 minute intervals (12 times)
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 16; i++) {
         let result = await helpers.makeCallout(
             COVIDURL,
             { port: 443, method: 'GET', headers: { "Content-Type": "application/json; charset=utf-8" } },
@@ -28,8 +28,8 @@ try {
             helpers.logger(`COVID Response: ${result.statusCode}, OK`)
             break
         } else {
-            helpers.logger(`COVID Response: ${result.statusCode}, waiting 10 minutes`)
-            await helpers.sleepPromise('m', 10);
+            helpers.logger(`COVID Response: ${result.statusCode}, waiting 15 minutes`)
+            await helpers.sleepPromise('m', 15);
         }
     }
     
