@@ -2,7 +2,10 @@ const helpers = require('./helpers');
 const { readFileSync } = require('fs');
 
 var CONFIG;
-const COVIDURL = `https://api.coronavirus.data.gov.uk/v1/data?structure=%7B%22date%22%3A%22date%22,%22areaName%22%3A%22areaName%22,%22areaCode%22%3A%22areaCode%22,%22newCasesByPublishDate%22%3A%22newCasesByPublishDate%22,%22cumCasesByPublishDate%22%3A%22cumCasesByPublishDate%22,%22cumDeaths28DaysByPublishDate%22%3A%22cumDeaths28DaysByPublishDate%22,%22cumDeathsByDeathDate%22%3A%22cumDeathsByDeathDate%22%7D&filters=areaType%3Doverview%3Bdate%3D${helpers.makeApiDate()}`
+
+const COVIDQUERY = 'structure={"date":"date","newCasesByPublishDate":"newCasesByPublishDate","newDeaths28DaysByPublishDate":"newDeaths28DaysByPublishDate"}&filters=areaType=overview;date=' + helpers.makeApiDate();
+const COVIDURL = "https://api.coronavirus.data.gov.uk/v1/data?" + COVIDQUERY;
+
 
 try {
     CONFIG = JSON.parse(readFileSync('./config.json'))
@@ -13,7 +16,7 @@ try {
 
 (async function() {
     helpers.logger('started!')
-    
+    console.log(COVIDURL);
     var covidResult;
 
     // try for 2 hours with 10 minute intervals (12 times)
@@ -24,7 +27,7 @@ try {
             null
         )
         if (200 === result.statusCode) {
-            covidResult = result.body
+            covidResult = JSON.parse(result.body)
             helpers.logger(`COVID Response: ${result.statusCode}, OK`)
             break
         } else {
@@ -37,8 +40,12 @@ try {
         helpers.logger(`unable to retrieve COVID result, exiting`)
         process.exit(1);
     }
-    
-    const discordMessage = `New cases: ${(JSON.parse(covidResult)).data[0].newCasesByPublishDate}`
+    // console.log(covidResult.data)
+    // console.log(covidResult.data[0].date)
+    // console.log(covidResult.data[0].newCasesByPublishDate)
+    // console.log(covidResult.data[0].newDeaths28DaysByPublishDate)
+
+    const discordMessage = `Date: **${covidResult.data[0].date}**\nNew cases: **${covidResult.data[0].newCasesByPublishDate}**\nNew deaths: **${covidResult.data[0].newDeaths28DaysByPublishDate}**`
     helpers.logger(`discord message: "${discordMessage}"`)
 
     const discordResult = await helpers.makeCallout(
